@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Document OCR Solution</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <!-- Additional enterprise fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fd;
+        }
+        .enterprise-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .nav-shadow {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #0a4c97;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0d5db8;
+        }
+        .btn-secondary {
+            background-color: #718096;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #4a5568;
+        }
+        .btn-success {
+            background-color: #0e9f6e;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        .btn-success:hover {
+            background-color: #057a55;
+        }
+        .dark-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white nav-shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-800" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="ml-2 text-xl font-semibold text-gray-900">GlyphDump OCR</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="#" class="border-blue-800 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Documents
+                        </a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Analytics
+                        </a>
+                        <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Settings
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800">
+                        <span class="sr-only">View notifications</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </button>
+                    <div class="ml-3 relative">
+                        <div>
+                            <button type="button" class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                    <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-semibold text-gray-900">Document Processing</h1>
+            <p class="mt-1 text-sm text-gray-600">Upload and process your documents with advanced OCR technology</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
+            <!-- Left Column -->
+            <div class="w-full lg:w-2/3">
+                <!-- Upload Card -->
+                <div class="bg-white rounded-lg enterprise-shadow p-6 mb-8">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Upload Document</h2>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                        <input type="file" id="pdfFile" accept=".pdf" class="hidden">
+                        <label for="pdfFile" class="flex flex-col items-center cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <span class="text-sm font-medium text-gray-700">Drag and drop your document here</span>
+                            <span class="mt-2 text-xs text-gray-500">or click to browse files</span>
+                            <span class="mt-1 text-xs text-gray-400">(Supports PDF files up to 50MB)</span>
+                        </label>
+                    </div>
+                    <div id="fileName" class="mt-3 text-sm text-gray-600 hidden"></div>
+                </div>
+
+                <!-- Processing Options Card -->
+                <div class="bg-white rounded-lg enterprise-shadow p-6 mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-medium text-gray-900">Processing Configuration</h2>
+                        <div>
+                            <button id="defaultSettingsBtn" class="text-xs text-blue-800 hover:text-blue-600">
+                                Reset to defaults
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Image Enhancement -->
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-700 mb-3">Image Enhancement</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="enhanceContrast" class="h-4 w-4 text-blue-800 rounded" checked>
+                                    <label for="enhanceContrast" class="ml-2 text-sm text-gray-700">Enhance Contrast (CLAHE)</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="reduceNoise" class="h-4 w-4 text-blue-800 rounded" checked>
+                                    <label for="reduceNoise" class="ml-2 text-sm text-gray-700">Noise Reduction</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Document Correction -->
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-700 mb-3">Document Correction</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="deskew" class="h-4 w-4 text-blue-800 rounded" checked>
+                                    <label for="deskew" class="ml-2 text-sm text-gray-700">Deskew Document</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="documentClean" class="h-4 w-4 text-blue-800 rounded" checked>
+                                    <label for="documentClean" class="ml-2 text-sm text-gray-700">Clean Document</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- OCR Settings -->
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-700 mb-3">OCR Engine Settings</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <label for="ocrMode" class="block text-sm text-gray-700 mb-1">Recognition Mode</label>
+                                    <select id="ocrMode" class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:ring-blue-800 focus:border-blue-800">
+                                        <option value="1" selected>Automatic (OEM 1)</option>
+                                        <option value="0">Legacy (OEM 0)</option>
+                                        <option value="2">LSTM only (OEM 2)</option>
+                                        <option value="3">Default (OEM 3)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="psmMode" class="block text-sm text-gray-700 mb-1">Page Segmentation Mode</label>
+                                    <select id="psmMode" class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:ring-blue-800 focus:border-blue-800">
+                                        <option value="6" selected>Assume single uniform block of text (PSM 6)</option>
+                                        <option value="3">Fully automatic page segmentation (PSM 3)</option>
+                                        <option value="4">Assume single column of text (PSM 4)</option>
+                                        <option value="1">Automatic page segmentation with OSD (PSM 1)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Status Card (initially hidden) -->
+                <div id="statusContainer" class="bg-white rounded-lg enterprise-shadow p-6 mb-8 hidden">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Processing Status</h2>
+                    <div class="mb-6">
+                        <div class="flex mb-2 items-center justify-between">
+                            <div>
+                                <span id="statusText" class="text-xs font-medium inline-block py-1 px-2 rounded-full text-blue-800 bg-blue-100">
+                                    Initializing...
+                                </span>
+                            </div>
+                            <div class="text-right">
+                                <span id="progressPercent" class="text-xs font-medium text-gray-700">
+                                    0%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="overflow-hidden h-2 mb-1 text-xs flex rounded bg-gray-200">
+                            <div id="progressBar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-800" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>Started: <span id="startTime">--:--:--</span></span>
+                            <span>Estimated completion: <span id="completionTime">--:--:--</span></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Processing Log -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-700">Processing Log</h3>
+                            <button id="expandLogBtn" class="text-xs text-blue-800 hover:text-blue-600">
+                                Expand
+                            </button>
+                        </div>
+                        <pre id="logOutput" class="bg-gray-50 border border-gray-200 p-3 rounded text-xs font-mono h-24 overflow-y-auto"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="w-full lg:w-1/3">
+                <!-- Actions Card -->
+                <div class="bg-white rounded-lg enterprise-shadow p-6 mb-8">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Actions</h2>
+                    
+                    <div class="space-y-4">
+                        <button id="processBtn" class="w-full btn-primary py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd" />
+                            </svg>
+                            Process Document
+                        </button>
+                        
+                        <a id="downloadLink" class="w-full btn-success py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center hidden" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Download Result
+                        </a>
+                        
+                        <button id="previewBtn" class="w-full btn-secondary py-2 px-4 rounded-md text-sm font-medium flex items-center justify-center hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                            </svg>
+                            Preview Document
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Info Card -->
+                <div class="bg-white rounded-lg enterprise-shadow p-6 mb-8">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Document Information</h2>
+                    <div class="divide-y divide-gray-200">
+                        <div class="py-3 flex justify-between">
+                            <span class="text-sm text-gray-500">File Name</span>
+                            <span id="infoFileName" class="text-sm text-gray-900">No file selected</span>
+                        </div>
+                        <div class="py-3 flex justify-between">
+                            <span class="text-sm text-gray-500">File Size</span>
+                            <span id="infoFileSize" class="text-sm text-gray-900">-</span>
+                        </div>
+                        <div class="py-3 flex justify-between">
+                            <span class="text-sm text-gray-500">Pages</span>
+                            <span id="infoPageCount" class="text-sm text-gray-900">-</span>
+                        </div>
+                        <div class="py-3 flex justify-between">
+                            <span class="text-sm text-gray-500">Created</span>
+                            <span id="infoCreatedDate" class="text-sm text-gray-900">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Card -->
+                <div class="bg-white rounded-lg enterprise-shadow p-6">
+                    <h2 class="text-lg font-medium text-gray-900 mb-4">Help & Resources</h2>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-sm text-blue-800 hover:text-blue-600 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                OCR Processing Documentation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-blue-800 hover:text-blue-600 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Troubleshooting Guide
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-blue-800 hover:text-blue-600 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                Contact Support
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal (hidden initially) -->
+    <div id="previewModal" class="fixed inset-0 overflow-y-auto hidden">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity dark-overlay" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+                                Document Preview
+                            </h3>
+                            <div class="flex mb-4">
+                                <button id="originalBtn" class="bg-blue-800 text-white py-1.5 px-4 rounded-l text-sm">Original</button>
+                                <button id="processedBtn" class="bg-gray-200 text-gray-800 py-1.5 px-4 rounded-r text-sm">Processed</button>
+                            </div>
+                            <div id="previewContent" class="border rounded p-4 bg-gray-50 h-96 overflow-y-auto">
+                                <div id="previewLoader" class="flex items-center justify-center h-full">
+                                    <svg class="animate-spin h-8 w-8 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+                                <img id="previewImage" class="max-w-full mx-auto hidden" src="" alt="Document preview">
+                                <div id="textContent" class="font-mono text-sm hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button id="closePreviewBtn" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        // DOM elements
+        const fileInput = document.getElementById('pdfFile');
+        const fileName = document.getElementById('fileName');
+        const infoFileName = document.getElementById('infoFileName');
+        const infoFileSize = document.getElementById('infoFileSize');
+        const infoPageCount = document.getElementById('infoPageCount');
+        const infoCreatedDate = document.getElementById('infoCreatedDate');
+        const processBtn = document.getElementById('processBtn');
+        const downloadLink = document.getElementById('downloadLink');
+        const previewBtn = document.getElementById('previewBtn');
+        const statusContainer = document.getElementById('statusContainer');
+        const statusText = document.getElementById('statusText');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const logOutput = document.getElementById('logOutput');
+        const startTime = document.getElementById('startTime');
+        const completionTime = document.getElementById('completionTime');
+        const previewModal = document.getElementById('previewModal');
+        const closePreviewBtn = document.getElementById('closePreviewBtn');
+        const expandLogBtn = document.getElementById('expandLogBtn');
+        const defaultSettingsBtn = document.getElementById('defaultSettingsBtn');
+
+        // File selection handler
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                fileName.textContent = `Selected file: ${file.name}`;
+                fileName.classList.remove('hidden');
+                processBtn.disabled = false;
+                
+                // Update info panel
+                infoFileName.textContent = file.name;
+                infoFileSize.textContent = formatFileSize(file.size);
+                infoCreatedDate.textContent = new Date().toLocaleDateString();
+                
+                // Simulate page count detection
+                setTimeout(() => {
+                    const pageCount = Math.floor(Math.random() * 10) + 1;
+                    infoPageCount.textContent = pageCount;
+                }, 500);
+            } else {
+                fileName.classList.add('hidden');
+                processBtn.disabled = true;
+                resetInfoPanel();
+            }
+        });
+
+        // Handle drag and drop
+        const dropZone = document.querySelector('.border-dashed');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragle
